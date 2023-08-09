@@ -14,8 +14,36 @@
     Total Words: <%= @article.text.split.size %>
   </p>
   <p>
-    Unique Words: <%= @article.text.split.uniq.size %>
+    Unique Words: <%= @article.text.downcase.split.uniq.size %>
   </p>
+</p>
+
+<p>
+  <strong>Unique Word Frequency</strong>
+  <div style="max-height: 20em; max-width: 20vw; overflow-y: scroll;">
+    <p>
+      <% word_count = Hash.new(0) %>
+      <% @article.text.split.each { |word| word_count[word.downcase] += 1 } %>
+      <% sorted_words = word_count.sort_by { |word, count| -count } %>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Word</th>
+            <th>Occurrences</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sorted_words.each do |word, count| %>
+            <tr>
+              <td><%= word %></td>
+              <td><%= count %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </p>
+  </div>
 </p>
 
 <%= link_to 'Edit', edit_article_path(@article) %> |
