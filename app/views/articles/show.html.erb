@@ -8,5 +8,15 @@
   <%= @article.text %>
 </p>
 
+<p>
+  <strong>Word Count:</strong>
+  <p>
+    Total Words: <%= @article.text.split.size %>
+  </p>
+  <p>
+    Unique Words: <%= @article.text.split.uniq.size %>
+  </p>
+</p>
+
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>
