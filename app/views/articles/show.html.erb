@@ -5,7 +5,9 @@
  
 <p>
   <strong>Text:</strong>
-  <%= @article.text %>
+  <div style="max-height: 15em; overflow-y: scroll;">
+    <%= @article.text %>
+  </div>
 </p>
 
 <p>
@@ -20,29 +22,26 @@
 
 <p>
   <strong>Unique Word Frequency</strong>
-  <div style="max-height: 20em; max-width: 20vw; overflow-y: scroll;">
-    <p>
-      <% word_count = Hash.new(0) %>
-      <% @article.text.split.each { |word| word_count[word.downcase] += 1 } %>
-      <% sorted_words = word_count.sort_by { |word, count| -count } %>
-      
-      <table>
-        <thead>
+  <div style="max-height: 15em; max-width: 20vw; overflow-y: scroll;">
+    <% word_count = Hash.new(0) %>
+    <% @article.text.downcase.split.each { |word| word_count[word.gsub(/[^a-z']+/i, '')] += 1 } %>
+    <% sorted_words = word_count.sort_by { |word, count| -count } %>
+    <table>
+      <thead>
+        <tr>
+          <th>Word</th>
+          <th>Occurrences</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sorted_words.each do |word, count| %>
           <tr>
-            <th>Word</th>
-            <th>Occurrences</th>
+            <td><%= word %></td>
+            <td><%= count %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% sorted_words.each do |word, count| %>
-            <tr>
-              <td><%= word %></td>
-              <td><%= count %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </p>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </p>
 
